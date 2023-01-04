@@ -16,8 +16,8 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-	origin: ['http://localhost:3611'],
-	methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+	origin: 'http://localhost:3611',
+	methods: ['POST', 'GET'],
 	credentials: true
 }));
 app.use(cookieParser());
@@ -38,7 +38,7 @@ app.use(
 );
 
 const authorizeUser = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-	if (req.session.user) {
+	if (req.session.user === 'admin' as any) {
 		next();
 	} else {
 		res.status(401).send({});
@@ -60,7 +60,7 @@ app.post('/welcomemessage', authorizeUser, (req: express.Request, res: express.R
 })
 
 app.post('/login', (req: express.Request, res: express.Response) => {
-	const password = req.body.password;
+	const { password } = req.body;
 	if (password === process.env.ADMIN_PASSWORD) {
 		req.session.user = 'admin' as any;
 		req.session.cookie.expires = new Date(Date.now() + config.secondsTillTimeout * 1000);
@@ -81,7 +81,12 @@ app.get('/currentuser', (req: express.Request, res: express.Response) => {
 
 app.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
-		res.send('User logged out');
+		if (err) {
+			console.log(err);
+			res.send('ERROR');
+		} else {
+			res.send('logged out');
+		}
 	});
 });
 
