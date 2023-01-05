@@ -9,17 +9,6 @@ db.pragma(`journal_mode = WAL`);
 
 import fs from 'fs';
 
-const welcomeMessagePathAndFileName = './src/data/welcomeMessage.txt';
-
-export const getWelcomeMessage = () => {
-	const welcomeMessage = fs.readFileSync(welcomeMessagePathAndFileName);
-	return welcomeMessage;
-}
-
-export const saveWelcomeMessage = (welcomeMessage: string) => {
-	fs.writeFileSync(welcomeMessagePathAndFileName, welcomeMessage);
-}
-
 export const getFlashcards = (): IFlashcard[] => {
 	const stmt = db.prepare(`
 SELECT f.id, f.category, c.name as categoryName, f.front, f.back FROM flashcards AS f

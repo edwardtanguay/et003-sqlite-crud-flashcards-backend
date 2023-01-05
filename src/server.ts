@@ -53,15 +53,6 @@ app.get('/', (req: express.Request, res: express.Response) => {
 	res.send(model.getApiInstructions());
 });
 
-app.get('/welcomemessage', (req: express.Request, res: express.Response) => {
-	res.send(model.getWelcomeMessage());
-})
-
-app.post('/welcomemessage', authorizeUser, (req: express.Request, res: express.Response) => {
-	const { welcomeMessage } = req.body;
-	model.saveWelcomeMessage(welcomeMessage);
-	res.send({});
-})
 
 app.post('/login', (req: express.Request, res: express.Response) => {
 	const { password } = req.body;
