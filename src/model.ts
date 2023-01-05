@@ -87,7 +87,7 @@ export const getApiInstructions = () => {
 </style>
 <h1>SQLite Site API</h1>
 <ul>
-	<li><a href="/test">/test</a> - shows date/time as test</li>
+<li>todo...</li>
 </ul>
 	`;
 }
