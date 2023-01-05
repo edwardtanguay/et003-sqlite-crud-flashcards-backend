@@ -65,7 +65,7 @@ app.post('/login', (req: express.Request, res: express.Response) => {
 		req.session.user = 'admin' as any;
 		req.session.cookie.expires = new Date(Date.now() + config.secondsTillTimeout * 1000);
 		req.session.save();
-		res.send('ok');
+		res.status(200).send('ok');
 	} else {
 		res.status(401).send({});
 	}
