@@ -3,8 +3,7 @@ import fs from 'fs';
 const welcomeMessagePathAndFileName = './src/data/welcomeMessage.txt';
 
 export const getWelcomeMessage = () => {
-	const welcomeMessage = fs.readFileSync(welcomeMessagePathAndFileName,
-		{ encoding: 'utf8', flag: 'r' });
+	const welcomeMessage = fs.readFileSync(welcomeMessagePathAndFileName);
 	return welcomeMessage;
 }
 
