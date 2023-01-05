@@ -35,3 +35,6 @@ GET {{url}}/currentuser
 
 ### LOGOUT
 GET {{url}}/logout
+
+### GET FLASHCARDS
+GET {{url}}/flashcards

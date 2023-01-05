@@ -45,6 +45,10 @@ const authorizeUser = (req: express.Request, res: express.Response, next: expres
 	}
 }
 
+app.get('/flashcards', (req: express.Request, res: express.Response) => {
+	res.json(model.getFlashcards());
+});
+
 app.get('/', (req: express.Request, res: express.Response) => {
 	res.send(model.getApiInstructions());
 });

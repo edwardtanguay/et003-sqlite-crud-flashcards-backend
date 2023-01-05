@@ -1,3 +1,11 @@
+import Database from 'better-sqlite3';
+import { IFlashcard } from './interfaces.js';
+import * as tools from './tools.js';
+
+const dbAbsolutePathAndFileName = tools.absolutifyPathAndFileName('src/data/db.sqlite');
+const db = new Database(dbAbsolutePathAndFileName);
+db.pragma(`journal_mode = WAL`);
+
 import fs from 'fs';
 
 const welcomeMessagePathAndFileName = './src/data/welcomeMessage.txt';
@@ -9,6 +17,18 @@ export const getWelcomeMessage = () => {
 
 export const saveWelcomeMessage = (welcomeMessage: string) => {
 	fs.writeFileSync(welcomeMessagePathAndFileName, welcomeMessage);
+}
+
+export const getFlashcards = (): IFlashcard[] => {
+	const stmt = db.prepare(`
+SELECT f.id, f.category, c.name as categoryName, f.front, f.back FROM flashcards AS f
+JOIN categories AS c ON f.category = c.idCode
+`);
+	const flashcards: IFlashcard[] = [];
+	for (let row of stmt.iterate()) {
+		flashcards.push(row);
+	}
+	return flashcards;
 }
 
 export const getApiInstructions = () => {
