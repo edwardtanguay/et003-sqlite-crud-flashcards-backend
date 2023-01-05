@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3';
 import { IFlashcard } from './interfaces.js';
 import * as tools from './tools.js';
+import * as model from './model.js';
 
 const dbAbsolutePathAndFileName = tools.absolutifyPathAndFileName('src/data/db.sqlite');
 const db = new Database(dbAbsolutePathAndFileName);
@@ -29,6 +30,43 @@ JOIN categories AS c ON f.category = c.idCode
 		flashcards.push(row);
 	}
 	return flashcards;
+}
+
+export const getFlashcard = (id: number): IFlashcard => {
+	const row = db.prepare('SELECT * FROM flashcards WHERE id = ?').get(id);
+	if (row === undefined) {
+		return row;
+	} else {
+		const flashcard: IFlashcard = {
+			...row
+		};
+		return flashcard;
+	}
+}
+
+export const deleteFlashcard = (id: number) => {
+	try {
+		const formerFlashcard = model.getFlashcard(id);
+		const stmt = db.prepare(`DELETE FROM flashcards WHERE id = ?`);
+		const result = stmt.run(id);
+		if (result.changes === 1) {
+			return {
+				status: "success",
+				deletedFlashcard: formerFlashcard
+			}
+		} else {
+			return {
+				status: "error",
+				message: `database changes = ${result.changes}`
+			}
+		}
+	} 
+	catch (e) {
+		return {
+			status: "error",
+			message: e.message
+		}
+	}
 }
 
 export const getApiInstructions = () => {

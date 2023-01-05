@@ -38,3 +38,9 @@ GET {{url}}/logout
 
 ### GET FLASHCARDS
 GET {{url}}/flashcards
+
+### DELETE FLASHCARD DELETE 
+DELETE {{url}}/flashcards/2805
+
+### DELETE BAD FLASHCARD DELETE 
+DELETE {{url}}/flashcards/askdjfskdf
