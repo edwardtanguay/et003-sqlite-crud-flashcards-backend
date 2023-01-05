@@ -20,7 +20,7 @@ content-type: application/json
 }
 
 ### GET LOGGED IN USER GET 
-GET {{url}}/currentuser
+GET {{url}}/get-current-user
 
 ### LOGOUT
 GET {{url}}/logout

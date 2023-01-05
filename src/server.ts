@@ -66,11 +66,11 @@ app.post('/login', (req: express.Request, res: express.Response) => {
 	}
 });
 
-app.get('/currentuser', (req: express.Request, res: express.Response) => {
+app.get('/get-current-user', (req: express.Request, res: express.Response) => {
 	if (req.session.user) {
 		res.send(req.session.user);
 	} else {
-		res.status(403).send({});
+		res.send('anonymousUser');
 	}
 });
 
