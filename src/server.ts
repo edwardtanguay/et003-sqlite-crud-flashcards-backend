@@ -17,7 +17,7 @@ dotenv.config();
 const app = express();
 app.use(cors({
 	origin: 'http://localhost:3611',
-	methods: ['POST', 'GET'],
+	methods: ['POST', 'GET', 'DELETE'],
 	credentials: true
 }));
 app.use(cookieParser());
