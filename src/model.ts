@@ -10,10 +10,7 @@ db.pragma(`journal_mode = WAL`);
 import fs from 'fs';
 
 export const getFlashcards = (): IFlashcard[] => {
-	const stmt = db.prepare(`
-SELECT f.id, f.category, c.name as categoryName, f.front, f.back FROM flashcards AS f
-JOIN categories AS c ON f.category = c.idCode
-`);
+	const stmt = db.prepare(`SELECT * from flashcards`);
 	const flashcards: IFlashcard[] = [];
 	for (let row of stmt.iterate()) {
 		flashcards.push(row);

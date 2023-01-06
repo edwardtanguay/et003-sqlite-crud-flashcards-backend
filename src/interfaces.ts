@@ -6,5 +6,4 @@ export interface INewFlashcard {
 
 export interface IFlashcard extends INewFlashcard {
 	id: number;
-	categoryName: string;
 }

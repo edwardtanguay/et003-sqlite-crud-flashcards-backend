@@ -19,7 +19,7 @@ content-type: application/json
 	"password": "123"
 }
 
-### GET LOGGED IN USER GET 
+### GET CURRENT USER
 GET {{url}}/get-current-user
 
 ### LOGOUT
@@ -32,7 +32,7 @@ GET {{url}}/flashcards
 DELETE {{url}}/flashcard/2805
 
 ### DELETE BAD FLASHCARD DELETE 
-DELETE {{url}}/flashcards/askdjfskdf
+DELETE {{url}}/flashcard/askdjfskdf
 
 ### EDIT FLASHCARD
 PUT {{url}}/flashcards/2805
