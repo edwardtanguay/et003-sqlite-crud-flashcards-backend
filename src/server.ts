@@ -5,6 +5,7 @@ import * as model from './model.js';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import * as config from './config.js';
+import { INewFlashcard } from './interfaces.js';
 
 declare module 'express-session' {
 	export interface SessionData {
@@ -85,7 +86,7 @@ app.get('/logout', (req, res) => {
 	});
 });
 
-app.delete('/flashcards/:id', authorizeUser, (req: express.Request, res: express.Response) => {
+app.delete('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Response) => {
 	const id = Number(req.params.id);
 	if (isNaN(id)) {
 		res.status(400).send({
@@ -94,6 +95,20 @@ app.delete('/flashcards/:id', authorizeUser, (req: express.Request, res: express
 		});
 	} else {
 		const result = model.deleteFlashcard(id);
+		res.json(result);
+	}
+});
+
+app.put('/flashcards/:id', authorizeUser, (req: express.Request, res: express.Response) => {
+	const id = Number(req.params.id);
+	const newFlashcard: INewFlashcard = req.body.flashcard;
+	if (isNaN(id)) {
+		res.status(400).send({
+			error: true,
+			message: "sent string as id, should be number"
+		});
+	} else {
+		const result = model.editFlashcard(id, newFlashcard);
 		res.json(result);
 	}
 });

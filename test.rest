@@ -29,7 +29,19 @@ GET {{url}}/logout
 GET {{url}}/flashcards
 
 ### DELETE FLASHCARD DELETE 
-DELETE {{url}}/flashcards/2805
+DELETE {{url}}/flashcard/2805
 
 ### DELETE BAD FLASHCARD DELETE 
 DELETE {{url}}/flashcards/askdjfskdf
+
+### EDIT FLASHCARD
+PUT {{url}}/flashcards/2805
+content-type: application/json
+
+{
+	"flashcard": {
+		"category": "category changed",
+		"front": "front changed",
+		"back": "back changed"
+	}
+}
