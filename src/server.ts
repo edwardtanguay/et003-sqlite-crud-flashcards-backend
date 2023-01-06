@@ -38,22 +38,15 @@ app.use(
 	})
 );
 
-const authorizeUser = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-	if (req.session.user === 'admin' as any) {
-		next();
-	} else {
-		res.status(401).send({});
-	}
-}
-
-app.get('/flashcards', (req: express.Request, res: express.Response) => {
-	res.json(model.getFlashcards());
-});
+// PUBLIC ROUTES
 
 app.get('/', (req: express.Request, res: express.Response) => {
 	res.send(model.getApiInstructions());
 });
 
+app.get('/flashcards', (req: express.Request, res: express.Response) => {
+	res.json(model.getFlashcards());
+});
 
 app.post('/login', (req: express.Request, res: express.Response) => {
 	const { password } = req.body;
@@ -75,27 +68,20 @@ app.get('/get-current-user', (req: express.Request, res: express.Response) => {
 	}
 });
 
-app.get('/logout', (req, res) => {
-	req.session.destroy((err) => {
-		if (err) {
-			res.send('ERROR');
-		} else {
-			res.send('logged out');
-		}
-	});
-});
+// PROTECTED ROUTES
 
-app.delete('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Response) => {
-	const id = Number(req.params.id);
-	if (isNaN(id)) {
-		res.status(400).send({
-			error: true,
-			message: "sent string, should be number"
-		});
+const authorizeUser = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+	if (req.session.user === 'admin' as any) {
+		next();
 	} else {
-		const result = model.deleteFlashcard(id);
-		res.json(result);
+		res.status(401).send({});
 	}
+}
+
+app.post('/flashcard', authorizeUser, (req: express.Request, res: express.Response) => {
+	const flashcard = req.body.flashcard;
+	const result = model.addFlashcard(flashcard)
+	res.json(result);
 });
 
 app.put('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Response) => {
@@ -112,11 +98,30 @@ app.put('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Res
 	}
 });
 
-app.post('/flashcard', authorizeUser, (req: express.Request, res: express.Response) => {
-	const flashcard = req.body.flashcard;
-	const result = model.addFlashcard(flashcard)
-	res.json(result);
+app.delete('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Response) => {
+	const id = Number(req.params.id);
+	if (isNaN(id)) {
+		res.status(400).send({
+			error: true,
+			message: "sent string, should be number"
+		});
+	} else {
+		const result = model.deleteFlashcard(id);
+		res.json(result);
+	}
 });
+
+app.get('/logout', authorizeUser, (req, res) => {
+	req.session.destroy((err) => {
+		if (err) {
+			res.send('ERROR');
+		} else {
+			res.send('logged out');
+		}
+	});
+});
+
+// SERVER 
 
 app.listen(port, () => {
 	console.log(`listening on port http://localhost:${port}`);

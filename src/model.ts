@@ -102,7 +102,7 @@ export const getApiInstructions = () => {
 	body {
 		background-color: #444;
 		padding: 1rem;
-		color: #ccc;
+		color: #aaa;
 		font-family: sans-serif;
 	}
 	code {
@@ -110,11 +110,30 @@ export const getApiInstructions = () => {
 	}
 	a {
 		color: orange;
+		font-family: courier;
+	}
+	li {
+		margin-bottom: .3rem;
+	}
+	span.route {
+		color: yellow;
+		font-family: courier;
 	}
 </style>
 <h1>SQLite Site API</h1>
+
+<h2>public routes</h2>
 <ul>
-<li>todo...</li>
+	<li>GET <a href="flashcards">/flashcards</a> - get all flaschards ordered by id</li>
+	<li>GET <a href="get-current-user">/get-current-user</a> - get logged-in user or "anonymous"</li>
+	<li>POST <span class="route">/login</span> - log user in with session/cookie</li>
+</ul>
+<h2>protected routes</h2>
+<ul>
+	<li>POST <span class="route">/flashcard</span> - add flashcard</li>
+	<li>PUT <span class="route">/flashcard/id</span> - edit flashcard</li>
+	<li>DELETE <span class="route">/flashcard/id</span> - delete flashcard</li>
+	<li>GET <span class="route">/logout</span> - log current user out</li>
 </ul>
 	`;
 }
