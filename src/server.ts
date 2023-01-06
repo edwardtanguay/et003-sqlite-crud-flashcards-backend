@@ -112,6 +112,12 @@ app.put('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Res
 	}
 });
 
+app.post('/flashcard', authorizeUser, (req: express.Request, res: express.Response) => {
+	const flashcard = req.body.flashcard;
+	const result = model.addFlashcard(flashcard)
+	res.json(result);
+});
+
 app.listen(port, () => {
 	console.log(`listening on port http://localhost:${port}`);
 });

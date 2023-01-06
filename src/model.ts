@@ -79,6 +79,23 @@ export const editFlashcard = (id: number, newFlashcard: INewFlashcard) => {
 	}
 }
 
+export const addFlashcard = (flashcard: INewFlashcard) => {
+	try {
+		const stmt = db.prepare(`INSERT INTO flashcards (category, front, back) VALUES (?, ?, ?)`);
+		const result = stmt.run(flashcard.category, flashcard.front, flashcard.back);
+		return {
+			status: "success",
+			idOfNewRecord: result.lastInsertRowid
+		}
+	}
+	catch (e) {
+		return {
+			status: "error",
+			message: e.message
+		}
+	}
+}
+
 export const getApiInstructions = () => {
 	return `
 <style>

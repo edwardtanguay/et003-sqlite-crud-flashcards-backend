@@ -11,7 +11,7 @@ content-type: application/json
 	"password": "badpassword"
 }
 
-### SUCCESSFUL LOGIN
+### GOOD LOGIN
 POST {{url}}/login
 content-type: application/json
 
@@ -43,5 +43,17 @@ content-type: application/json
 		"category": "category changed",
 		"front": "front changed",
 		"back": "back changed"
+	}
+}
+
+### ADD FLASHCARD
+POST {{url}}/flashcard
+content-type: application/json
+
+{
+	"flashcard": {
+		"category": "linux",
+		"front": "show all files with full info",
+		"back": "`ls -al`"
 	}
 }
