@@ -78,7 +78,6 @@ app.get('/get-current-user', (req: express.Request, res: express.Response) => {
 app.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
 		if (err) {
-			console.log(err);
 			res.send('ERROR');
 		} else {
 			res.send('logged out');
