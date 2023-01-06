@@ -35,7 +35,7 @@ DELETE {{url}}/flashcard/2805
 DELETE {{url}}/flashcard/askdjfskdf
 
 ### EDIT FLASHCARD
-PUT {{url}}/flashcards/2805
+PUT {{url}}/flashcard/3000
 content-type: application/json
 
 {

@@ -18,7 +18,7 @@ dotenv.config();
 const app = express();
 app.use(cors({
 	origin: 'http://localhost:3611',
-	methods: ['POST', 'GET', 'DELETE'],
+	methods: ['POST', 'GET', 'DELETE', 'PUT'],
 	credentials: true
 }));
 app.use(cookieParser());
@@ -99,7 +99,7 @@ app.delete('/flashcard/:id', authorizeUser, (req: express.Request, res: express.
 	}
 });
 
-app.put('/flashcards/:id', authorizeUser, (req: express.Request, res: express.Response) => {
+app.put('/flashcard/:id', authorizeUser, (req: express.Request, res: express.Response) => {
 	const id = Number(req.params.id);
 	const newFlashcard: INewFlashcard = req.body.flashcard;
 	if (isNaN(id)) {

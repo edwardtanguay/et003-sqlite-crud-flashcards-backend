@@ -58,6 +58,7 @@ export const deleteFlashcard = (id: number) => {
 export const editFlashcard = (id: number, newFlashcard: INewFlashcard) => {
 	try {
 		const stmt = db.prepare(`UPDATE flashcards SET category = ?, front = ?, back = ? WHERE id = ?`);
+		console.log(newFlashcard);
 		const result = stmt.run(newFlashcard.category, newFlashcard.front, newFlashcard.back, id);
 		if (result.changes === 1) {
 			return {
